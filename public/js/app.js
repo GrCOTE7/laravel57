@@ -13023,10 +13023,13 @@ try {
     __webpack_require__(7);
 } catch (e) {}
 
+var sommiel = 10;
+console.log('sommiel = ' + sommiel);
+$('#sommiel').html(sommiel);
+
 setTimeout(function () {
     var t = 0,
-        c = 1,
-        sommiel = 10;
+        c = 1;
 
     while (c <= sommiel) {
         t += c;
@@ -13034,7 +13037,7 @@ setTimeout(function () {
     }
 
     $('.lionel').css('color', 'blue').html('Sommiel de ' + sommiel + ' = ' + t);
-}, 2000);
+}, sommiel * 500); // Tempo: 1/2 seconde par unité
 
 /***/ }),
 /* 5 */

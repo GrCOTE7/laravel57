@@ -2,6 +2,8 @@
 .env.*.php
 .env.php
 .env
+public/css/app.css
+public/js/app.js
 node_modules/
 storage/debugbar/
 vendor/
