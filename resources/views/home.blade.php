@@ -15,7 +15,7 @@
                     @endif
 
                     You are logged in!<br><br>
-                    <p class="lionel">OK</p>
+                    <p class="lionel">Ici, calcul du sommiel de 10 à venir...</p>
                 </div>
             </div>
         </div>

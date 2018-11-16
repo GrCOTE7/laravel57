@@ -5,15 +5,15 @@ try {
     require('bootstrap');
 } catch (e) {}
 
-// windows._ = require ('myscript.js');
+setTimeout(function () {
+    var t = 0,
+        c = 1,
+        sommiel = 10;
 
+    while (c <= sommiel) {
+        t += c;
+        c++;
+    }
 
-
-var t=0, c=1;
-
-while(c<11) {
-  t+=c;
-  c++;
-}
-
-$('.lionel').css('color', 'red').html('Sommiel de 10 = ' + t);
+    $('.lionel').css('color', 'blue').html('Sommiel de ' + sommiel + ' = ' + t);
+}, 2000);
