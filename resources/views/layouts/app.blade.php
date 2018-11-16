@@ -22,8 +22,8 @@
             <ul class="navbar-nav ml-auto">
                 @guest
                 <!-- <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a> -->
-                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">@lang('Inscription')</a></li>
+                <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
+                <li class="nav-item{{ currentRoute(route('register')) }}"><a class="nav-link" href="{{ route('register') }}">@lang('Inscription')</a></li>
                 @else
                 <li class="nav-item">
                     <a id="logout" class="nav-link" href="{{ route('logout') }}">@lang('Déconnexion')</a>
@@ -37,18 +37,19 @@
     </nav>
 
     @yield('content')
-    
+
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('script')
     <script>
-    $(() => {
-        $('#logout').click((e) => {
-            e.preventDefault()
-            $('#logout-form').submit()
+        $(() => {
+            $('#logout').click((e) => {
+                e.preventDefault()
+                $('#logout-form').submit()
+            })
+            $('[data-toggle="tooltip"]').tooltip()
         })
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
+
+    </script>
 </body>
 
 </html>
