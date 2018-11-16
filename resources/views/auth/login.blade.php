@@ -15,6 +15,7 @@
                 'name' => 'email',
                 'required' => true,
                 ])
+
             @include('partials.form-group', [
                 'title' => __('Mot de passe'),
                 'type' => 'password',
