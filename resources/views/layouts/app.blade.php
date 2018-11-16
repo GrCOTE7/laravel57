@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 @guest
-                {# <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a> #}
+                <!-- <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a> -->
                 <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">@lang('Inscription')</a></li>
                 @else

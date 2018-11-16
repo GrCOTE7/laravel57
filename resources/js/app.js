@@ -5,7 +5,8 @@ try {
     require('bootstrap');
 } catch (e) {}
 
-var sommiel = 10;
+var sommiel = 7;
+
 console.log('sommiel = ' + sommiel);
 $('#sommiel').html(sommiel);
 

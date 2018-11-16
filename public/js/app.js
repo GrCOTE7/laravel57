@@ -13023,7 +13023,8 @@ try {
     __webpack_require__(7);
 } catch (e) {}
 
-var sommiel = 10;
+var sommiel = 7;
+
 console.log('sommiel = ' + sommiel);
 $('#sommiel').html(sommiel);
 
