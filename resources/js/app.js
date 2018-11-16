@@ -16,4 +16,4 @@ while(c<11) {
   c++;
 }
 
-$('.lionel').css('color', 'red').html('Yes: ' + t);
+$('.lionel').css('color', 'red').html('Sommiel de 10 = ' + t);
