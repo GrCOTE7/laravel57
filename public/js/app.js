@@ -13019,9 +13019,22 @@ module.exports = __webpack_require__(8);
 window._ = __webpack_require__(5);
 window.Popper = __webpack_require__(1).default;
 try {
-    window.$ = window.jQuery = __webpack_require__(2);
-    __webpack_require__(7);
+  window.$ = window.jQuery = __webpack_require__(2);
+  __webpack_require__(7);
 } catch (e) {}
+
+// windows._ = require ('myscript.js');
+
+
+var t = 0,
+    c = 1;
+
+while (c < 11) {
+  t += c;
+  c++;
+}
+
+$('.lionel').css('color', 'red').html('Yes: ' + t);
 
 /***/ }),
 /* 5 */
