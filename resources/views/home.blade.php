@@ -15,7 +15,7 @@
                     @endif
 
                     You are logged in!<br><br>
-                    <p class="lionel">Ici, calcul du sommiel de 10 à venir...</p>
+                    <p class="lionel">Ici, calcul du sommiel de <span id="sommiel">n</span> à venir...</p>
                 </div>
             </div>
         </div>
