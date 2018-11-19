@@ -1,9 +1,12 @@
 <script>
     $(() => {
+
         $.ajaxSetup({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         })
+
         $('[data-toggle="tooltip"]').tooltip()
+
         $('a.btn-danger').click((e) => {
             let that = $(e.currentTarget)
             e.preventDefault()
@@ -41,3 +44,5 @@
         })
     })
 </script>
+
+

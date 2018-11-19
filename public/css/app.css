@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
+/*!
  * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
@@ -2257,6 +2257,11 @@ pre code {
 }
 
 .form-control::-webkit-input-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
 }
@@ -10904,7 +10909,7 @@ body.swal2-toast-column .swal2-toast .swal2-input {
   font-size: 1em;
 }
 
-body.swal2-toast-column .swal2-toast .swal2-validation-message {
+body.swal2-toast-column .swal2-toast .swal2-validationerror {
   font-size: 1em;
 }
 
@@ -11288,7 +11293,7 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
 }
 
 body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 body.swal2-height-auto {
@@ -11859,6 +11864,12 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   color: #cccccc;
 }
 
+.swal2-popup .swal2-input:-ms-input-placeholder,
+.swal2-popup .swal2-file:-ms-input-placeholder,
+.swal2-popup .swal2-textarea:-ms-input-placeholder {
+  color: #cccccc;
+}
+
 .swal2-popup .swal2-input::-ms-input-placeholder,
 .swal2-popup .swal2-file::-ms-input-placeholder,
 .swal2-popup .swal2-textarea::-ms-input-placeholder {
@@ -11937,7 +11948,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   margin: 0 .4em;
 }
 
-.swal2-popup .swal2-validation-message {
+.swal2-popup .swal2-validationerror {
   display: none;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -11953,7 +11964,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   overflow: hidden;
 }
 
-.swal2-popup .swal2-validation-message::before {
+.swal2-popup .swal2-validationerror::before {
   display: inline-block;
   width: 1.5em;
   min-width: 1.5em;
@@ -12227,7 +12238,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
           animation: none;
 }
 
-.swal2-rtl .swal2-close {
+[dir='rtl'] .swal2-close {
   right: auto;
   left: 0;
 }
@@ -12278,20 +12289,6 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
-  }
-}
-
-@media print {
-  body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
-    overflow-y: scroll !important;
-  }
-
-  body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) > [aria-hidden='true'] {
-    display: none;
-  }
-
-  body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container {
-    position: initial !important;
   }
 }
 

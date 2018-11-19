@@ -1,12 +1,15 @@
 @extends('layouts.form')
+
 @section('card')
+
     @component('components.card')
+
         @slot('title')
             @lang('Inscription')
         @endslot
 
         <form method="POST" action="{{ route('register') }}">
-            {{ csrf_field() }}
+            @csrf
 
             @include('partials.form-group', [
                 'title' => __('Nom'),
@@ -48,5 +51,7 @@
             @endcomponent
 
         </form>
+
     @endcomponent
+
 @endsection

@@ -1,13 +1,15 @@
 @extends('layouts.form')
+
 @section('card')
+
     @component('components.card')
-    
+
         @slot('title')
             @lang('Connexion')
         @endslot
 
         <form method="POST" action="{{ route('login') }}">
-            {{ csrf_field() }}
+            @csrf
 
             @include('partials.form-group', [
                 'title' => __('Adresse email'),
@@ -23,11 +25,13 @@
                 'required' => true,
                 ])
 
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label class="custom-control-label" for="remember"> @lang('Se rappeler de moi')</label>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <label class="custom-control-label" for="remember"> @lang('Se rappeler de moi')</label>
+                </div>
             </div>
-            
+
             @component('components.button')
                 @lang('Connexion')
             @endcomponent
@@ -37,5 +41,7 @@
             </a>
 
         </form>
+
     @endcomponent
+
 @endsection
