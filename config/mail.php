@@ -119,5 +119,12 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
+    
+    'stream' => [
+        'ssl' => [
+          'allow_self_signed' => TRUE,
+          'verify_peer'       => FALSE,
+          'verify_peer_name'  => FALSE,
+        ],
+      ],
 ];

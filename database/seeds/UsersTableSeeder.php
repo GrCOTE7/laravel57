@@ -13,21 +13,21 @@ class UsersTableSeeder extends Seeder
             'name' => 'Durand',
             'email' => 'grcote7@gmail.com',
             'role' => 'admin',
-            'password' => bcrypt('admin'),
+            'password' => bcrypt('123123'),
             'email_verified_at' => Carbon::now(),
         ]);
 
         User::create([
             'name' => 'Dupont',
             'email' => 'dupont@chezlui.fr',
-            'password' => bcrypt('user'),
+            'password' => bcrypt('123123'),
             'email_verified_at' => Carbon::now(),
         ]);
 
         User::create([
             'name' => 'Martin',
             'email' => 'martin@chezlui.fr',
-            'password' => bcrypt('user'),
+            'password' => bcrypt('123123'),
             'email_verified_at' => Carbon::now(),
         ]);
     }

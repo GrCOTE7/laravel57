@@ -2,4 +2,11 @@
 .env.*.php
 .env.php
 .env
-.phpunit.result.cache
+public/css/app.css
+public/js/app.js
+node_modules/
+storage/debugbar/
+vendor/
+composer.lock
+package-lock.json
+.idea
