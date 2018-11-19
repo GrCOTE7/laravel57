@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
 use App\Repositories\CategoryRepository;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+ public function __construct()
+ {
+  $this->middleware('ajax')->only('destroy');
+ }
+
  /**
   * Display a listing of the resource.
   *
@@ -41,17 +47,6 @@ class CategoryController extends Controller
  }
 
  /**
-  * Display the specified resource.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
- public function show($id)
- {
-  //
- }
-
- /**
   * Show the form for editing the specified resource.
   *
   * @param  int  $id
@@ -59,7 +54,7 @@ class CategoryController extends Controller
   */
  public function edit($id)
  {
-  //
+  return view('categories.edit', compact('category'));
  }
 
  /**
@@ -69,9 +64,11 @@ class CategoryController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
- public function update(Request $request, $id)
+ public function update(CategoryRequest $request, Category $category)
  {
-  //
+  $category->update($request->all());
+
+  return redirect()->route('category.index')->with('ok', __('La catégorie a bien été modifiée'));
  }
 
  /**
@@ -80,8 +77,9 @@ class CategoryController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
- public function destroy($id)
+ public function destroy(Category $category)
  {
-  //
+  $category->delete();
+  return response()->json();
  }
 }
