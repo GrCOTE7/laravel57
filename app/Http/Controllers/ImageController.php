@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repositories\ImageRepository;
+use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
  protected $repository;
- 
+
  public function __construct(ImageRepository $repository)
  {
   $this->repository = $repository;
@@ -31,7 +31,13 @@ class ImageController extends Controller
   */
  public function store(Request $request)
  {
-  //
+  $request->validate([
+   'image'       => 'required|image|max:2000',
+   'category_id' => 'required|exists:categories,id',
+   'description' => 'nullable|string|max:255',
+  ]);
+  $this->repository->store($request);
+  return back()->with('ok', __("L'image a bien été enregistrée"));
  }
 
  /**
