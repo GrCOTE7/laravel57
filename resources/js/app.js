@@ -7,4 +7,5 @@ try {
     window.$ = window.jQuery = require('jquery');
     require('bootstrap');
     require('@fortawesome/fontawesome-free/js/all.js');
+    require('magnific-popup');
 } catch (e) {}
