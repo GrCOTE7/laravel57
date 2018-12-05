@@ -14,7 +14,7 @@
         @foreach($categories as $category)
         <tr>
             <td>{{ $category->name }}</td>
-            <td style="text-align:center">
+            <td style="text-align:right">
                 <a type="button" href="{{ route('category.destroy', $category->id) }}" class="btn btn-danger btn-sm pull-right invisible"
                     data-toggle="tooltip" title="@lang('Supprimer la catégorie') {{ $category->name }}"><i class="fas fa-trash fa-lg"></i></a>
                 <a type="button" href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm pull-right mr-2 invisible"
