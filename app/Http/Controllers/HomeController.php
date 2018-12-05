@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\ImageRepository;
 
 class HomeController extends Controller
 {
@@ -11,8 +12,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ImageRepository $repository)
     {
-        return view('home');
+        $images = $repository->getAllImages ();
+        return view ('home', compact ('images'));
     }
 }

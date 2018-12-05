@@ -22,4 +22,18 @@ class ImageRepository
   $image->name        = $path;
   $request->user()->images()->save($image);
  }
+
+ public function getAllImages()
+ {
+  return Image::latestWithUser()->paginate(config('app.pagination'));
+ }
+
+ public function scopeLatestWithUser($query)
+ {
+  $user = auth()->user();
+  if ($user && $user->adult) {
+   return $query->with('user')->latest();
+  }
+  return $query->with('user')->whereAdult(false)->latest();
+ }
 }
