@@ -2,30 +2,30 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
 // Sweetalert
 @import '~sweetalert2/src/sweetalert2.scss';
-
 @import '~magnific-popup/dist/magnific-popup.css';
 
 body {
     padding-top: 70px;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
+
 .site-wrapper {
     display: grid;
     height: 100%;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "center";
-  }
-  .site-wrapper-inner {
+}
+
+.site-wrapper-inner {
     grid-area: center;
     align-self: center;
 }
@@ -36,12 +36,12 @@ html, body {
 
 .card-columns {
     @include media-breakpoint-only(sm) {
-      column-count: 2;
+        column-count: 2;
     }
     @include media-breakpoint-only(lg) {
-      column-count: 3;
+        column-count: 3;
     }
     @include media-breakpoint-only(xl) {
-      column-count: 4;
+        column-count: 4;
     }
 }

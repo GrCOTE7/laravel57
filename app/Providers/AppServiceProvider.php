@@ -9,7 +9,6 @@ use App\Repositories\CategoryRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
-
     
     /**
      * Bootstrap any application services.
