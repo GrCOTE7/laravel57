@@ -1,17 +1,31 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Repositories\ImageRepository;
+use App\Repositories\ {
+  ImageRepository, CategoryRepository
+};
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
- protected $repository;
+ protected $repository, $categoryRepository;
 
- public function __construct(ImageRepository $repository)
- {
-  $this->repository = $repository;
- }
+ public function __construct(
+  ImageRepository $imageRepository,
+  CategoryRepository $categoryRepository)
+{
+  {
+    $this->imageRepository = $imageRepository;
+    $this->categoryRepository = $categoryRepository;
+  }
+}
+
+public function category($slug)
+{
+    $category = $this->categoryRepository->getBySlug ($slug);
+    $images = $this->imageRepository->getImagesForCategory ($slug);
+    return view ('home', compact ('category', 'images'));
+}
 
  /**
   * Show the form for creating a new resource.

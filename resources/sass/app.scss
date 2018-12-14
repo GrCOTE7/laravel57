@@ -30,6 +30,10 @@ body {
     align-self: center;
 }
 
+.text-title, h1 {
+    color: white;
+}
+
 .custom-file-label::after {
     content: "Parcourir";
 }

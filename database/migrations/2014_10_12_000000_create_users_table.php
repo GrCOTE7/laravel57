@@ -18,12 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->text('settings');
+            $table->text('settings');  // 2do cf dû mettre text au lieu de json
             $table->string('password');
             $table->enum('role', ['user', 'admin'])->default('user');
             $table->rememberToken();
             $table->timestamps();
-        }); // 2do cf text au lieu de json
+        });
     }
 
     /**
