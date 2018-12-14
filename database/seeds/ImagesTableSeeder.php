@@ -360,6 +360,14 @@ class ImagesTableSeeder extends Seeder
     'created_at'  => '2017-11-03 23:40:48',
     'updated_at'  => '2018-02-24 21:07:31',
    ),
+   43 => array(
+    'category_id' => 1,
+    'user_id'     => 1,
+    'name'        => 'VgUJ7kKkCJhl6Gh4tkH5GzVkCbuORlDCl9NhNIA9.jpeg',
+    'description' => null,
+    'created_at'  => '2018-12-14 23:40:48',
+    'updated_at'  => '2018-12-24 21:07:31',
+   ),
   ));
 
  }
