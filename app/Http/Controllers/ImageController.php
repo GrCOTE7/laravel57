@@ -1,86 +1,168 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Repositories\ {
-  ImageRepository, CategoryRepository
-};
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Repositories\ {
+    ImageRepository, CategoryRepository
+};
+use App\Models\ {
+    User, Image
+};
 
 class ImageController extends Controller
 {
- protected $repository, $categoryRepository;
+    /**
+     * Image repository.
+     *
+     * @var \App\Repositories\ImageRepository
+     */
+    protected $imageRepository;
 
- public function __construct(
-  ImageRepository $imageRepository,
-  CategoryRepository $categoryRepository)
-{
-  {
-    $this->imageRepository = $imageRepository;
-    $this->categoryRepository = $categoryRepository;
-  }
-}
+    /**
+     * Category repository.
+     *
+     * @var \App\Repositories\CategoryRepository
+     */
+    protected $categoryRepository;
 
-public function category($slug)
-{
-    $category = $this->categoryRepository->getBySlug ($slug);
-    $images = $this->imageRepository->getImagesForCategory ($slug);
-    return view ('home', compact ('category', 'images'));
-}
+    /**
+     * Create a new ImageController instance.
+     *
+     * @param  \App\Repositories\ImageRepository $imageRepository
+     * @param  \App\Repositories\CategoryRepository $categoryRepository
+     */
+    public function __construct(
+        ImageRepository $imageRepository,
+        CategoryRepository $categoryRepository)
+    {
+        $this->imageRepository = $imageRepository;
+        $this->categoryRepository = $categoryRepository;
+    }
 
-public function user(User $user)
-{
-    $images = $this->imageRepository->getImagesForUser ($user->id);
-    return view ('home', compact ('user', 'images'));
-}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view ('images.create');
+    }
 
- /**
-  * Show the form for creating a new resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
- public function create()
- {
-  return view('images.create');
- }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate ([
+            'image' => 'required|image|max:2000',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string|max:255',
+        ]);
 
- /**
-  * Store a newly created resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @return \Illuminate\Http\Response
-  */
- public function store(Request $request)
- {
-  $request->validate([
-   'image'       => 'required|image|max:2000',
-   'category_id' => 'required|exists:categories,id',
-   'description' => 'nullable|string|max:255',
-  ]);
-  $this->repository->store($request);
-  return back()->with('ok', __("L'image a bien été enregistrée"));
- }
+        $this->imageRepository->store ($request);
 
- /**
-  * Update the specified resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
- public function update(Request $request, $id)
- {
-  //
- }
+        return back ()->with ('ok', __ ("L'image a bien été enregistrée"));
+    }
 
- /**
-  * Remove the specified resource from storage.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
- public function destroy($id)
- {
-  //
- }
+    /**
+     * Display a listing of the images for the specified category.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function category($slug)
+    {
+        $category = $this->categoryRepository->getBySlug ($slug);
+        $images = $this->imageRepository->getImagesForCategory ($slug);
+
+        return view ('home', compact ('category', 'images'));
+    }
+
+    /**
+     * Display a listing of the images for the specified user.
+     *
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function user(User $user)
+    {
+        $images = $this->imageRepository->getImagesForUser ($user->id);
+
+        return view ('home', compact ('user', 'images'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Image $image
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Image $image)
+    {
+        $this->authorize ('manage', $image);
+
+        $image->delete ();
+
+        return back ();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Image  $image
+     * @return \App\models\Image
+     */
+    public function descriptionUpdate(Request $request, Image $image)
+    {
+        $this->authorize ('manage', $image);
+
+        $request->validate ([
+            'description' => 'nullable|string|max:255'
+        ]);
+
+        $image->description = $request->description;
+        $image->save();
+
+        return $image;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Image
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Image $image)
+    {
+        $this->authorize('manage', $image);
+
+        $image->category_id = $request->category_id;
+        $image->save();
+
+        return back()->with('updated', __('La catégorie a bien été changée !'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Http\Response
+     */
+    public function adultUpdate(Request $request, Image $image)
+    {
+        $this->authorize ('manage', $image);
+
+        $image->adult = $request->adult == 'true';
+        $image->save();
+
+        return response ()->json();
+    }
 }
