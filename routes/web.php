@@ -21,6 +21,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::name('category')->get('category/{slug}', 'ImageController@category');
 
+Route::name ('user')->get ('user/{user}', 'ImageController@user');
+
 Route::middleware('admin')->group(function () {
  Route::resource('category', 'CategoryController', [
   'except' => 'show',

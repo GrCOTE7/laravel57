@@ -35,6 +35,13 @@ class ImageRepository
         })->paginate(config('app.pagination'));
     }
 
+    public function getImagesForUser($id)
+    {
+        return Image::latestWithUser ()->whereHas ('user', function ($query) use ($id) {
+            $query->whereId ($id);
+        })->paginate(config('app.pagination'));
+    }
+
     public function scopeLatestWithUser($query)
     {
         $user = auth()->user();

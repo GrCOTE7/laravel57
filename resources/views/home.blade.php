@@ -30,11 +30,12 @@
                             <p class="card-text">{{ $image->description }}</p>
                         </div>
                     @endisset
+
                     <div class="card-footer text-muted">
-                        <em>
-                            <a href="#" data-toggle="tooltip"
-                               title="{{ __('Voir les photos de ') . $image->user->name }}">{{ $image->user->name }}</a>
-                        </em>
+                    <em>
+    <a href="{{ route('user', $image->user->id) }}" data-toggle="tooltip"
+        title="{{ __('Voir les photos de ') . $image->user->name }}">{{ $image->user->name }}</a>
+</em>
                         <div class="pull-right">
                             <em>
                                 {{ $image->created_at->formatLocalized('%x') }}

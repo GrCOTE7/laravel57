@@ -5,6 +5,7 @@ use App\Repositories\ {
   ImageRepository, CategoryRepository
 };
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ImageController extends Controller
 {
@@ -25,6 +26,12 @@ public function category($slug)
     $category = $this->categoryRepository->getBySlug ($slug);
     $images = $this->imageRepository->getImagesForCategory ($slug);
     return view ('home', compact ('category', 'images'));
+}
+
+public function user(User $user)
+{
+    $images = $this->imageRepository->getImagesForUser ($user->id);
+    return view ('home', compact ('user', 'images'));
 }
 
  /**
