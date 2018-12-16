@@ -2,6 +2,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\ {User, Image};
 
 class ImagePolicy
 {
