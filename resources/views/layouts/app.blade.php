@@ -72,6 +72,12 @@
         <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
         <li class="nav-item{{ currentRoute(route('register')) }}"><a class="nav-link" href="{{ route('register') }}">@lang('Inscription')</a></li>
         @else
+        <li class="nav-item{{ currentRoute(
+                    route('profile.edit', auth()->id()),
+                    route('profile.show', auth()->id())
+                )}}">
+            <a class="nav-link" href="{{ route('profile.edit', auth()->id()) }}">@lang('Profil')</a>
+        </li>
         <li class="nav-item">
           <a id="logout" class="nav-link" href="{{ route('logout') }}">@lang('Déconnexion')</a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hide">
