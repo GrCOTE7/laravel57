@@ -364,7 +364,7 @@ class ImagesTableSeeder extends Seeder
     'category_id' => 1,
     'user_id'     => 1,
     'name'        => 'VgUJ7kKkCJhl6Gh4tkH5GzVkCbuORlDCl9NhNIA9.jpeg',
-    'description' => null,
+    'description' => 'La Puce',
     'created_at'  => '2018-12-14 23:40:48',
     'updated_at'  => '2018-12-24 21:07:31',
    ),
