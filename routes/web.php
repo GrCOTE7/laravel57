@@ -48,7 +48,9 @@ Route::middleware ('auth', 'verified')->group (function () {
     Route::resource ('image', 'ImageController', [
         'only' => ['create', 'store', 'destroy', 'update']
     ]);
-
+    Route::resource ('user', 'UserController', [
+        'only' => ['index', 'edit', 'update', 'destroy']
+    ]);
     Route::name ('image.')->middleware ('ajax')->group (function () {
         Route::prefix('image')->group(function () {
             Route::name ('albums.update')->put ('{image}/albums', 'ImageController@albumsUpdate');

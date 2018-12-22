@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'email_verified_at',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'settings'
+        'name', 'email', 'password', 'settings',
     ];
 
     /**
@@ -33,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function images()
     {
-        return $this->hasMany (Image::class);
+        return $this->hasMany(Image::class);
     }
 
     /**
@@ -41,7 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function albums()
     {
-        return $this->hasMany (Album::class);
+        return $this->hasMany(Album::class);
     }
 
     /**
@@ -52,6 +58,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAdminAttribute()
     {
         return $this->role === 'admin';
+    }
+
+    public function setAdultAttribute($value)
+    {
+        $this->attributes['settings'] = json_encode([
+            'adult'      => $value,
+            'pagination' => $this->settings->pagination,
+        ]);
     }
 
     /**
@@ -82,6 +96,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getSettingsAttribute($value)
     {
-        return json_decode ($value);
+        return json_decode($value);
     }
 }

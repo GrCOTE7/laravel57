@@ -114,9 +114,7 @@
                 @maintenance
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('maintenance.index') }}" data-toggle="tooltip" title="@lang('Mode maintenance')">
-                            <span class="fas fa-exclamation-circle  fa-lg" style="color: red;">
-
-                            </span>
+                            <span class="fas fa-exclamation-circle fa-lg" style="color: red"></span>
                         </a>
                     </li>
                 @endmaintenance
