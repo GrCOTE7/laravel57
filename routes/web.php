@@ -28,16 +28,23 @@ Route::middleware ('auth', 'verified')->group (function () {
         'only' => ['edit', 'update', 'destroy', 'show'],
         'parameters' => ['profile' => 'user']
     ]);
+    Route::resource ('album', 'AlbumController', [
+        'except' => 'show'
+    ]);
     Route::resource ('image', 'ImageController', [
         'only' => ['create', 'store', 'destroy', 'update']
     ]);
+
     Route::name ('image.')->middleware ('ajax')->group (function () {
         Route::prefix('image')->group(function () {
+            Route::name ('albums.update')->put ('{image}/albums', 'ImageController@albumsUpdate');
             Route::name ('description')->put ('{image}/description', 'ImageController@descriptionUpdate');
             Route::name ('adult')->put ('{image}/adult', 'ImageController@adultUpdate');
+            Route::name('albums')->get('{image}/albums', 'ImageController@albums');
         });
     });
 });
 
 Route::name ('category')->get ('category/{slug}', 'ImageController@category');
 Route::name ('user')->get ('user/{user}', 'ImageController@user');
+Route::name ('album')->get ('album/{slug}', 'ImageController@album');

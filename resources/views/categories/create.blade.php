@@ -16,7 +16,6 @@
                 'type' => 'text',
                 'name' => 'name',
                 'required' => true,
-                'focus' => true
                 ])
 
             @component('components.button')

@@ -66,8 +66,8 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'settings' => '{"pagination": 8, "adult": false}',
             'password' => Hash::make($data['password']),
+            'settings' => '{"pagination": 8, "adult": false}',
         ]);
     }
 }

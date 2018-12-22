@@ -2,8 +2,10 @@
 
 namespace App\Events;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\ {
+    Queue\SerializesModels,
+    Database\Eloquent\Model
+};
 
 class NameSaving
 {

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'settings',
+        'name', 'email', 'password', 'settings'
     ];
 
     /**
@@ -33,7 +33,15 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany (Image::class);
+    }
+
+    /**
+     * Get the albums.
+     */
+    public function albums()
+    {
+        return $this->hasMany (Album::class);
     }
 
     /**
@@ -46,17 +54,34 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === 'admin';
     }
 
+    /**
+     * Get the adult status.
+     *
+     * @return boolean
+     */
     public function getAdultAttribute()
     {
         return $this->settings->adult;
     }
-    public function getSettingsAttribute($value)
-    {
-        return json_decode($value);
-    }
 
+    /**
+     * Get the pagination value status.
+     *
+     * @return integer
+     */
     public function getPaginationAttribute()
     {
         return $this->settings->pagination;
+    }
+
+    /**
+     * Get the settings.
+     *
+     * @param Json $value
+     * @return integer
+     */
+    public function getSettingsAttribute($value)
+    {
+        return json_decode ($value);
     }
 }

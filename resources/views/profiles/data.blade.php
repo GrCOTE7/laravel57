@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <main class="container-fluid">
         <h1>@lang('Export des données personnelles')</h1>
@@ -72,3 +73,4 @@
         @endunless
     </main>
 @endsection
+

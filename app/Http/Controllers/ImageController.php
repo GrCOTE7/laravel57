@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\ {
-    ImageRepository, CategoryRepository
+    ImageRepository, AlbumRepository, CategoryRepository
 };
 use App\Models\ {
     User, Image
@@ -27,16 +27,26 @@ class ImageController extends Controller
     protected $categoryRepository;
 
     /**
+     * Album repository.
+     *
+     * @var \App\Repositories\ImageRepository
+     */
+    protected $albumRepository;
+
+    /**
      * Create a new ImageController instance.
      *
      * @param  \App\Repositories\ImageRepository $imageRepository
+     * @param  \App\Repositories\AlbumRepository $albumRepository
      * @param  \App\Repositories\CategoryRepository $categoryRepository
      */
     public function __construct(
         ImageRepository $imageRepository,
+        AlbumRepository $albumRepository,
         CategoryRepository $categoryRepository)
     {
         $this->imageRepository = $imageRepository;
+        $this->albumRepository = $albumRepository;
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -162,6 +172,63 @@ class ImageController extends Controller
 
         $image->adult = $request->adult == 'true';
         $image->save();
+
+        return response ()->json();
+    }
+
+    /**
+     * Display a listing of the images for the specified album.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function album($slug)
+    {
+        $album = $this->albumRepository->getBySlug ($slug);
+        $images = $this->imageRepository->getImagesForAlbum ($slug);
+
+        return view ('home', compact ('album', 'images'));
+    }
+
+    /**
+     * Display a listing of albums for image
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Http\Response
+     */
+    public function albums(Request $request,  Image $image)
+    {
+        $this->authorize ('manage', $image);
+
+        $albums = $this->albumRepository->getAlbumsWithImages ($request->user ());
+
+        return view ('images.albums', compact('albums', 'image'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Http\Response
+     */
+    public function albumsUpdate(Request $request, Image $image)
+    {
+        $this->authorize ('manage', $image);
+
+        $image->albums()->sync($request->albums);
+
+        $path = pathinfo (parse_url(url()->previous())['path']);
+
+        if($path['dirname'] === '/album') {
+
+            $album = $this->albumRepository->getBySlug ($path['basename']);
+
+            if($this->imageRepository->isNotInAlbum ($image, $album)) {
+                return response ()->json('reload');
+            }
+        }
 
         return response ()->json();
     }

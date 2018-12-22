@@ -96,7 +96,7 @@ return [
     'required_if'          => 'Le champ :attribute est obligatoire quand la valeur de :other est :value.',
     'required_unless'      => 'Le champ :attribute est obligatoire sauf si :other est :values.',
     'required_with'        => 'Le champ :attribute est obligatoire quand :values est présent.',
-    'required_with_all'    => 'Le champ :attribute est obligatoire quand :values sont présents.',
+    'required_with_all'    => 'Le champ :attribute est obligatoire quand :values est présent.',
     'required_without'     => "Le champ :attribute est obligatoire quand :values n'est pas présent.",
     'required_without_all' => "Le champ :attribute est requis quand aucun de :values n'est présent.",
     'same'                 => 'Les champs :attribute et :other doivent être identiques.',
@@ -111,7 +111,6 @@ return [
     'unique'               => 'La valeur du champ :attribute est déjà utilisée.',
     'uploaded'             => "Le fichier du champ :attribute n'a pu être téléversé.",
     'url'                  => "Le format de l'URL de :attribute n'est pas valide.",
-    'uuid'                 => 'Le champ :attribute doit être un UUID valide',
 
     /*
     |--------------------------------------------------------------------------
@@ -144,7 +143,7 @@ return [
     'attributes' => [
         'name'                  => 'nom',
         'username'              => "nom d'utilisateur",
-        'email'                 => 'courriel',
+        'email'                 => 'adresse courriel',
         'first_name'            => 'prénom',
         'last_name'             => 'nom',
         'password'              => 'mot de passe',
