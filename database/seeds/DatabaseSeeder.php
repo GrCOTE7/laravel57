@@ -18,3 +18,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RatingsTableSeeder::class);
     }
 }
+
+
+/*
+php artisan clear-compiled 
+composer dump-autoload
+php artisan optimize
+*/
