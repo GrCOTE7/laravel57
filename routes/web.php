@@ -21,6 +21,20 @@ Route::middleware ('admin')->group (function () {
         'except' => 'show'
     ]);
 
+    Route::resource ('user', 'UserController', [
+        'only' => ['index', 'edit', 'update', 'destroy']
+    ]);
+
+    Route::name ('orphans.')->prefix('orphans')->group(function () {
+        Route::name ('index')->get ('/', 'AdminController@orphans');
+        Route::name ('destroy')->delete ('/', 'AdminController@destroy');
+    });
+
+    Route::name ('maintenance.')->prefix('maintenance')->group(function () {
+        Route::name ('index')->get ('/', 'AdminController@edit');
+        Route::name ('update')->put ('/', 'AdminController@update');
+    });
+
 });
 
 Route::middleware ('auth', 'verified')->group (function () {

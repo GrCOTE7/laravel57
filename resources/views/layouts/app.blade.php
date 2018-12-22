@@ -54,7 +54,10 @@
                 <a class="nav-link dropdown-toggle{{ currentRoute(
                                         route('category.create'),
                                         route('category.index'),
-                                        route('category.edit', request()->category?: 0)
+                                        route('category.edit', request()->category?: 0),
+                                        route('orphans.index'),
+                                        route('maintenance.index'),
+                                        route('user.index')
                                     )}}" href="#" id="navbarDropdownGestCat" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     @lang('Administration')
@@ -65,6 +68,15 @@
                     </a>
                     <a class="dropdown-item" href="{{ route('category.index') }}">
                         <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les catégories')
+                    </a>
+                    <a class="dropdown-item" href="{{ route('orphans.index') }}">
+                        <i class="fas fa-images fa-lg"></i> @lang('Photos orphelines')
+                    </a>
+                    <a class="dropdown-item" href="{{ route('maintenance.index') }}">
+                        <i class="fas fa-cogs fa-lg"></i> @lang('Mode maintenance')
+                    </a>
+                    <a class="dropdown-item" href="{{ route('user.index') }}">
+                        <i class="fas fa-users fa-lg"></i> @lang('Utilisateurs')
                     </a>
                 </div>
             </li>
@@ -99,6 +111,15 @@
             <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
             <li class="nav-item{{ currentRoute(route('register')) }}"><a class="nav-link" href="{{ route('register') }}">@lang('Inscription')</a></li>
             @else
+                @maintenance
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('maintenance.index') }}" data-toggle="tooltip" title="@lang('Mode maintenance')">
+                            <span class="fas fa-exclamation-circle  fa-lg" style="color: red;">
+
+                            </span>
+                        </a>
+                    </li>
+                @endmaintenance
                 <li class="nav-item{{ currentRoute(
                             route('profile.edit', auth()->id()),
                             route('profile.show', auth()->id())
