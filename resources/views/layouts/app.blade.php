@@ -114,10 +114,22 @@
                 @maintenance
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('maintenance.index') }}" data-toggle="tooltip" title="@lang('Mode maintenance')">
-                            <span class="fas fa-exclamation-circle fa-lg" style="color: red"></span>
+                            <span class="fas fa-exclamation-circle  fa-lg" style="color: red;">
+
+                            </span>
                         </a>
                     </li>
                 @endmaintenance
+                @unless(auth()->user()->unreadNotifications->isEmpty())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('notification.index') }}">
+                            <span class="fa-layers fa-fw">
+                                <span style="color: yellow" class="fas fa-bell fa-lg" data-fa-transform="grow-2"></span>
+                                <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-4 up-2 left-1" style="color: black; font-weight:900">{{ auth()->user()->unreadNotifications->count() }}</span>
+                            </span>
+                        </a>
+                    </li>
+                @endunless
                 <li class="nav-item{{ currentRoute(
                             route('profile.edit', auth()->id()),
                             route('profile.show', auth()->id())

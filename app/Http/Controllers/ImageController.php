@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\ {
-    ImageRepository, AlbumRepository, CategoryRepository
+    ImageRepository, NotificationRepository, AlbumRepository, CategoryRepository
 };
 use App\Models\ {
     User, Image
@@ -231,5 +231,59 @@ class ImageController extends Controller
         }
 
         return response ()->json();
+    }
+
+    /**
+     * Rate the image.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Image
+     * @return array
+     */
+    public function rate(Request $request, Image $image)
+    {
+        // Get authenticated user
+        $user = $request->user();
+
+        // Is user image owner ?
+        if($this->imageRepository->isOwner ($user, $image)) {
+            return response()->json(['status' => 'no']);
+        }
+
+        // Rating
+        $rate = $this->imageRepository->rateImage ($user, $image, $request->value);
+        $this->imageRepository->setImageRate ($image);
+
+        // Notification
+        $notificationRepository->deleteDuplicate($user, $image);
+        $image->user->notify(new ImageRated($image, $request->value, $user->id));
+
+        return [
+            'status' => 'ok',
+            'id' => $image->id,
+            'value' => $image->rate,
+            'count' => $image->users->count(),
+            'rate' => $rate
+        ];
+    }
+
+    /**
+     * Update the clicks.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Image
+     * @return array
+     */
+    public function click(Request $request, Image $image)
+    {
+        if ($request->session()->has('images') && in_array ($image->id, session ('images'))) {
+            return response ()->json (['increment' => false]);
+        }
+
+        $request->session()->push('images', $image->id);
+
+        $image->increment('clicks');
+
+        return ['increment' => true];
     }
 }

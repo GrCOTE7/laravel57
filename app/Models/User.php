@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use App\Events\UserCreated;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = [
         'created_at',
         'updated_at',
@@ -22,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'settings',
+        'name', 'email', 'password', 'settings'
     ];
 
     /**
@@ -35,11 +41,20 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => UserCreated::class,
+    ];
+
+    /**
      * Get the images.
      */
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany (Image::class);
     }
 
     /**
@@ -47,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function albums()
     {
-        return $this->hasMany(Album::class);
+        return $this->hasMany (Album::class);
     }
 
     /**
@@ -58,14 +73,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAdminAttribute()
     {
         return $this->role === 'admin';
-    }
-
-    public function setAdultAttribute($value)
-    {
-        $this->attributes['settings'] = json_encode([
-            'adult'      => $value,
-            'pagination' => $this->settings->pagination,
-        ]);
     }
 
     /**
@@ -96,6 +103,28 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getSettingsAttribute($value)
     {
-        return json_decode($value);
+        return json_decode ($value);
+    }
+
+    /**
+     * Set the adult attribute.
+     *
+     * @param  bool  $value
+     * @return void
+     */
+    public function setAdultAttribute($value)
+    {
+        $this->attributes['settings'] = json_encode ([
+            'adult' => $value,
+            'pagination' => $this->settings->pagination
+        ]);
+    }
+
+    /**
+     * Get the images rated by the user.
+     */
+    public function imagesRated()
+    {
+        return $this->belongsToMany (Image::class);
     }
 }

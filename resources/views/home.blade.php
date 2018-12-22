@@ -29,7 +29,7 @@
         <div class="card-columns">
             @foreach($images as $image)
                 <div class="card @if($image->adult) border-danger @endif" id="image{{ $image->id }}">
-                    <a href="{{ url('images/' . $image->name) }}" class="image-link">
+                    <a href="{{ url('images/' . $image->name) }}" class="image-link" data-link="{{ route('image.click', $image->id) }}">
                         <img class="card-img-top"
                              src="{{ url('thumbs/' . $image->name) }}"
                              alt="image">
@@ -46,12 +46,26 @@
                         </em>
                         <div class="pull-right">
                             <em>
-                                {{ $image->created_at->formatLocalized('%x') }}
+                                (<span class="image-click">{{ $image->clicks }}</span> {{ trans_choice(__('vue|vues'), $image->clicks) }}) {{ $image->created_at->formatLocalized('%x') }}
                             </em>
                         </div>
-
-
                         <div class="star-rating" id="{{ $image->id }}">
+                            <span class="count-number">({{ $image->users->count() }})</span>
+                            <div id="{{ $image->id . '.5' }}" data-toggle="tooltip" title="5" @if($image->rate > 4) class="star-yellow" @endif>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div id="{{ $image->id . '.4' }}" data-toggle="tooltip" title="4" @if($image->rate > 3) class="star-yellow" @endif>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div id="{{ $image->id . '.3' }}" data-toggle="tooltip" title="3" @if($image->rate > 2) class="star-yellow" @endif>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div id="{{ $image->id . '.2' }}" data-toggle="tooltip" title="2" @if($image->rate > 1) class="star-yellow" @endif>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div id="{{ $image->id . '.1' }}" data-toggle="tooltip" title="1" @if($image->rate > 0) class="star-yellow" @endif>
+                                <i class="fas fa-star"></i>
+                            </div>
                             <span class="pull-right">
                                 @adminOrOwner($image->user_id)
                                     <a class="toggleIcons"
@@ -358,6 +372,97 @@
                     .fail(() => {
                         swallAlertServer()
                     })
+            })
+
+            let memoStars = []
+
+            $('.star-rating div').click((e) => {
+                @auth
+                    let element = $(e.currentTarget)
+                    let values = element.attr('id').split('.')
+                    element.addClass('fa-spin')
+                    $.ajax({
+                        url: "{{ url('rating') }}" + '/' + values[0],
+                        type: 'PUT',
+                        data: {value: values[1]}
+                    })
+                    .done((data) => {
+                        if (data.status === 'ok') {
+                            let image = $('#' + data.id)
+                            memoStars = []
+                            image.children('div')
+                                .removeClass('star-yellow')
+                                .each(function (index, element) {
+                                    if (data.value > 4 - index) {
+                                        $(element).addClass('star-yellow')
+                                        memoStars.push(true)
+                                    }
+                                    memoStars.push(false)
+                                })
+                                .end()
+                                .find('span.count-number')
+                                .text('(' + data.count + ')')
+                            if(data.rate) {
+                                if(data.rate == values[1]) {
+                                    title = '@lang("Vous avez déjà donné cette note !")'
+                                } else {
+                                    title = '@lang("Votre vote a été modifié !")'
+                                }
+                            } else {
+                                title = '@lang("Merci pour votre vote !")'
+                            }
+                            swal({
+                                title: title,
+                                type: 'warning'
+                            })
+                        } else {
+                            swal({
+                                title: '@lang('Vous ne pouvez pas voter pour vos photos !')',
+                                type: 'error'
+                            })
+                        }
+                        element.removeClass('fa-spin')
+                    })
+                    .fail(() => {
+                        swallAlertServer()
+                        element.removeClass('fa-spin')
+                    })
+                @else
+                    swal({
+                        title: '@lang('Vous devez être connecté pour pouvoir voter !')',
+                        type: 'error'
+                    })
+                @endauth
+            })
+
+            $('.star-rating').hover(
+                (e) => {
+                    memoStars = []
+                    $(e.currentTarget).children('div')
+                        .each((index, element) => {
+                            memoStars.push($(element).hasClass('star-yellow'))
+                        })
+                        .removeClass('star-yellow')
+             }, (e) => {
+                $.each(memoStars, (index, value) => {
+                    if(value) {
+                        $(e.currentTarget).children('div:eq(' + index + ')').addClass('star-yellow')
+                    }
+                })
+            })
+
+            $('a.image-link').click((e) => {
+                e.preventDefault()
+                let that = $(e.currentTarget)
+                $.ajax({
+                    method: 'patch',
+                    url: that.attr('data-link')
+                }).done((data) => {
+                    if(data.increment) {
+                        let numberElement = that.siblings('div.card-footer').find('.image-click')
+                        numberElement.text(parseInt(numberElement.text()) + 1)
+                    }
+                })
             })
 
         })

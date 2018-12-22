@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use App\Repositories\ { CategoryRepository, AlbumRepository };
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,19 +16,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-            
         Schema::defaultStringLength(191);
         
         Blade::if ('admin', function () {
             return auth ()->check () && auth ()->user ()->admin;
         });
 
-        Blade::if ('maintenance', function () {
-            return auth ()->check () && auth ()->user ()->admin && app()->isDownForMaintenance();
-        });
-
         Blade::if ('adminOrOwner', function ($id) {
             return auth ()->check () && (auth ()->id () === $id || auth ()->user ()->admin);
+        });
+
+        Blade::if ('maintenance', function () {
+            return auth ()->check () && auth ()->user ()->admin && app()->isDownForMaintenance();
         });
 
         if (request ()->server ("SCRIPT_NAME") !== 'artisan') {

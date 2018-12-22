@@ -37,8 +37,8 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "center";
-  }
-  .site-wrapper-inner {
+}
+.site-wrapper-inner {
     grid-area: center;
     align-self: center;
 }
@@ -51,5 +51,19 @@ a:hover {
 .star-rating {
     direction: rtl;
     display: block;
-    text-align: right;
 }
+.star-rating div {
+    display: inline-block;
+    font-size: 15px;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+  }
+  .star-yellow,
+  .star-rating div:hover,
+  .star-rating div:hover ~ div {
+    color: #f2b600
+  }
+  .hover_img a { position:relative; }
+  .hover_img a span { position:absolute; display:none; z-index:99; }
+  .hover_img a:hover span { display:block; }

@@ -1,14 +1,22 @@
 @extends('layouts.form-wide')
+
 @section('css')
+
     <style>
         .fa-check { color: green; }
     </style>
+
 @endsection
+
+
 @section('card')
+
     @component('components.card')
+
         @slot('title')
-            @lang('Gestion des utilisateurs<br>(administrateurs en rouge)')
+            @lang('Gestion des utilisateurs (administrateurs en rouge)')
         @endslot
+
         <div class="table-responsive">
             <table class="table table-dark text-white">
                 <thead>
@@ -51,13 +59,19 @@
                 </tbody>
             </table>
         </div>
+
     @endcomponent
+
 @endsection
+
 @section('script')
+
     <script>
         $(() => {
             $('a').removeClass('invisible')
         })
     </script>
+
     @include('partials.script-delete', ['text' => __('Vraiment supprimer cet utilisateur ?'), 'return' => 'removeTr'])
+
 @endsection

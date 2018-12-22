@@ -46,4 +46,12 @@ class Image extends Model
 
         return $query->with ('user')->whereAdult(false)->latest ();
     }
+
+    /**
+     * Get the users that rate the image.
+     */
+    public function users()
+    {
+        return $this->belongsToMany (User::class)->withPivot('rating');
+    }
 }

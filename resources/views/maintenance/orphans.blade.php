@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('content')
+
     <main class="container-fluid">
         <h1>
             {{ $orphans->count }} {{ trans_choice(__('image orpheline|images orphelines'), $orphans->count) }}
@@ -8,6 +10,7 @@
                    role="button">@lang('Supprimer')</a>
             @endif
         </h1>
+
         <div class="card-columns">
             @foreach($orphans as $orphan)
                 <div class="card">
@@ -16,7 +19,11 @@
             @endforeach
         </div>
     </main>
+
 @endsection
+
 @section('script')
+
     @include('partials.script-delete', ['text' => __('Vraiment supprimer toutes les photos orphelines ?'), 'return' => 'reload'])
+
 @endsection
