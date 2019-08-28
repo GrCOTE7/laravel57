@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            @component('components.button')
+            @component('components.button', ['color'=>'success'])
                 @lang('Connexion')
             @endcomponent
 
