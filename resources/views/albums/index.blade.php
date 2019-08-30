@@ -14,10 +14,10 @@
         @if($userAlbums->isEmpty())
         <p class="text-center">@lang("Vous n'avez aucun album pour le moment")</p>
         @else
-        @foreach($userAlbums as $album)
+        @foreach($userAlbums as $k=>$album)
         <tr>
-            <td>{{ $album->name }}</td>
-            <td>
+            <td class="@if (!$k) notop @endif">{{ $album->name }}</td>
+            <td class="ar @if (!$k) notop @endif">
                 <a type="button" href="{{ route('album.destroy', $album->id) }}"
                     class="btn btn-danger btn-sm pull-right invisible" data-toggle="tooltip" title="@lang(" Supprimer
                     l'album") {{ $album->name }}"><i class="fas fa-trash fa-lg"></i></a>
