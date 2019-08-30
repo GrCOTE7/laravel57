@@ -11,10 +11,10 @@
 
         <table class="table table-dark text-white">
             <tbody>
-            @foreach($categories as $category)
+            @foreach($categories as $k=>$category)
                 <tr>
-                    <td>{{ $category->name }}</td>
-                    <td>
+                    <td class="@if (!$k) notop @endif">{{  $k+1 }}/ {{ $category->name }}</td>
+                    <td class="ar @if (!$k) notop @endif">
                         <a type="button" href="{{ route('category.destroy', $category->id) }}"
                            class="btn btn-danger btn-sm pull-right invisible" data-toggle="tooltip"
                            title="@lang('Supprimer la catégorie') {{ $category->name }}"><i
