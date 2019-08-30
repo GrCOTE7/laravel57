@@ -16,7 +16,7 @@
         @else
         @foreach($userAlbums as $k=>$album)
         <tr>
-            <td class="@if (!$k) notop @endif">{{ $album->name }}</td>
+            <td class="@if (!$k) notop @endif">@if ($album->count()>1)  {{ $k+1 }}/ @endif {{ $album->name }}</td>
             <td class="ar @if (!$k) notop @endif">
                 <a type="button" href="{{ route('album.destroy', $album->id) }}"
                     class="btn btn-danger btn-sm pull-right invisible" data-toggle="tooltip" title="@lang(" Supprimer
